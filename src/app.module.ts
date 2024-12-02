@@ -7,6 +7,7 @@ import { dataSourceOptions } from 'ormconfig';
 import { UserModule } from './features/user/user.module';
 import { RegisterChatModule } from './features/chat/register-chat/register-chat.module';
 import { SendMessageModule } from './features/message/send-message/send-message.module';
+import { PusherModule } from './features/pusher/pusher.module';
 
 
 @Module({
@@ -19,7 +20,8 @@ import { SendMessageModule } from './features/message/send-message/send-message.
     }),
     UserModule,
     RegisterChatModule,
-    SendMessageModule
+    SendMessageModule,
+    PusherModule
   ],
   controllers: [AppController],
   providers: [AppService],
