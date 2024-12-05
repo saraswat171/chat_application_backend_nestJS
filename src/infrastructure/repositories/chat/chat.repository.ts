@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Chat } from 'src/domain/chat/chat.entity';
-import { ChatRegisterInterface } from 'src/features/Chat/register-Chat/register-Chat.interface';
+import { ChatRegisterInterface } from 'src/features/chat/register-chat/register-chat.interface';
 import { DataSource, Repository } from 'typeorm';
 
 

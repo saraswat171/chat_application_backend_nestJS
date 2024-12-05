@@ -28,7 +28,7 @@ try{
   const channelName = `${channels.REAL_TIME_CHAT_CHANNEL}`;
   const eventName = `${events.REAL_TIME_MESSAGE_SENT_EVENT}-${chat?.uuid}`;
   const action = pusherAction.MESSAGE_SENT
-  await this.pusherService.trigger(channelName, eventName, { sendMessage,action });
+  // await this.pusherService.trigger(channelName, eventName, { sendMessage,action });
   return sendMessage;
 }
 catch(err){

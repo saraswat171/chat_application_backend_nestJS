@@ -1,4 +1,5 @@
-import { ChatRegisterInterface } from "src/features/Chat/register-Chat/register-Chat.interface";
+
+import { ChatRegisterInterface } from "src/features/chat/register-chat/register-chat.interface";
 import { UserRegisterInterface } from "src/features/user/register-user/register-user.interface";
 
 export interface SendMessageInterface {

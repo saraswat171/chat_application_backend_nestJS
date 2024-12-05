@@ -25,7 +25,9 @@ import { AuthGuard } from '../auth-gaurd/authgaurd';
     @Res() res: Response,@Query() query: ListUsersDto
   ) {
       console.log('request: ', request['user']);
-      const response = await this.handler.handle(query);
+      const userData = request['user']
+      const data ={...query ,uuid:userData?.sub }
+      const response = await this.handler.handle(data);
       return res.status(HttpStatus.OK).json(response);
     }
   }

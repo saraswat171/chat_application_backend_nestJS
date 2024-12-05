@@ -2,7 +2,7 @@
 export interface User{
     username: string
     email: string;
-    password: string
+    uuid: string
 }
 
 export interface ListUserResponse {
@@ -11,3 +11,10 @@ export interface ListUserResponse {
     current_page: number;
     per_page: number;
   }
+
+
+export interface UsersResponseCommand{
+ page?:number,
+ limit?:number,
+ uuid:string
+}

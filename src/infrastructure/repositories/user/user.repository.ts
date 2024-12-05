@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { User } from 'src/domain/user/user.entity';
 import { ListUsersDto } from 'src/features/user/list-user/list-user.dto';
+import { UsersResponseCommand } from 'src/features/user/list-user/list-user.interface';
 import { UserRegisterInterface } from 'src/features/user/register-user/register-user.interface';
 import { DataSource, Repository } from 'typeorm';
 
@@ -29,18 +30,22 @@ export class UserRepository extends Repository<User> {
     return await this.findOne({ where: { uuid } });
   }
 
-  async listUsers(payload: ListUsersDto) {
-    const { page = 1, limit = 10 } = payload;
+  async listUsers(payload: UsersResponseCommand) {
+    const { page = 1, limit = 10 ,uuid} = payload;
 
     const offset = limit * (page - 1);
 
-    let queryBuilder = this.createQueryBuilder();
-
-    const [data, total] = await queryBuilder
-      .offset(offset)
-      .limit(limit)
-      // .orderBy('created_at', 'DESC')
-      .getManyAndCount();
+    let queryBuilder = this.createQueryBuilder('user')
+    .select([
+      'user.uuid',
+      'user.username',
+      'user.email',
+    ])
+    .where('user.uuid != :uuid', { uuid }) 
+    .offset(offset)
+    .limit(limit);
+  
+  const [data, total] = await queryBuilder.getManyAndCount();
 
     return { data, total, current_page: page, per_page: limit };
   }

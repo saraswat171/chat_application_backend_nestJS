@@ -26,10 +26,10 @@ import { ConfigService } from '@nestjs/config';
       }
       try {
         const payload = await this.jwtService.verifyAsync(
-            token,
-            {
-                secret: this.configService.get<string>('JWT_SECRET')
-            }
+          token,
+          {
+            secret: this.configService.get<string>('JWT_SECRET')
+          }
         );
         request['user'] = payload;
       } catch {
