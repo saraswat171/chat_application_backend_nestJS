@@ -14,21 +14,45 @@ export class ChatRepository extends Repository<Chat> {
     return await this.save(payload);
   }
 
-  async findChatByParticipantId(participants: string[]): Promise<Chat> {
-    return await this.createQueryBuilder('chat')
-      .leftJoinAndSelect('chat.participants', 'user')  // Join with the participants relation
-      .where('user.uuid IN (:...participants)', { participants }) // Match participant IDs
-      .getOne(); // Fetch multiple results
-  }
+  // async findChatByParticipantId(participants: string[]): Promise<Chat> {
+  //   return await this.createQueryBuilder('chat')
+  //     .leftJoinAndSelect('chat.participants', 'user') 
+  //     .where('user.uuid IN (:...participants)', { participants }) 
+  //     .getOne(); 
+  // }
 
-  async findChats(uuid: string){
+
+   async findChatByParticipantId(participants: string[]): Promise<any> {
+  //   const participantCount = participants.length;
+  
+  return this.createQueryBuilder('chat')
+  .innerJoin('chat.participants', 'participant')
+  .where('participant.uuid IN (:...participants)', { participants })
+  .groupBy('chat.uuid')
+  .having('COUNT(participant.uuid) = :count', { count: participants.length })
+  .getOne();
+   }
+  
+  // async findChats(uuid: string){
+  //   return await this.createQueryBuilder('chat')
+  //   .leftJoinAndSelect('chat.messages', 'message')  
+  //   .leftJoin('message.sender', 'sender')  
+  //   .addSelect(['sender.uuid', 'sender.username', 'sender.email']) 
+  //   .where('chat.uuid = :uuid', { uuid }) 
+  //   .getOne();
+  // }
+
+  async findChats(uuid: string) {
     return await this.createQueryBuilder('chat')
-    .leftJoinAndSelect('chat.messages', 'message')  
-    .leftJoinAndSelect('message.sender' , 'sender')
-    .addSelect(['sender.uuid', 'sender.username', 'sender.email']) 
-    .where('chat.uuid = :uuid', { uuid }) 
-    .getOne();
+      .leftJoinAndSelect('chat.messages', 'message') 
+      .orderBy('message.createdAt', 'DESC') 
+      .limit(5) 
+      .leftJoin('message.sender', 'sender') 
+      .addSelect(['sender.uuid', 'sender.username', 'sender.email']) 
+      .where('chat.uuid = :uuid', { uuid }) 
+      .getOne();
   }
+  
 
   
   async findChatByUUID(uuid:string): Promise<Chat> {

@@ -4,6 +4,6 @@ import { PusherService } from './pusher.servcie';
 
 @Module({
   providers: [PusherService],
-  exports: [PusherService],  // Export so it can be used in other modules
+  exports: [PusherService], 
 })
 export class PusherModule {}

@@ -16,24 +16,21 @@ export class SendMessageService {
   ) {}
 
   public async handle(payload) {
-try{
   const chat = await this.repository.findChatByUUID(payload.chat);
   if(!chat){
     throw new ChatNotFound();
   }
-  payload.sender = await this.userRepository.findUserByUUID(payload.sender);
-  payload.chat=chat;
+   payload.sender = await this.userRepository.findUserByUUID(payload.sender);
+  // payload.chat=chat;
   
   const sendMessage = await this.messageRepository.saveMessage(payload)
-  const channelName = `${channels.REAL_TIME_CHAT_CHANNEL}`;
-  const eventName = `${events.REAL_TIME_MESSAGE_SENT_EVENT}-${chat?.uuid}`;
-  const action = pusherAction.MESSAGE_SENT
-  // await this.pusherService.trigger(channelName, eventName, { sendMessage,action });
+
+  // const channelName = `${channels.REAL_TIME_CHAT_CHANNEL}`;
+  // const eventName = `${events.REAL_TIME_MESSAGE_SENT_EVENT}-${chat?.uuid}`;
+  // const action = pusherAction.MESSAGE_SENT
+  //  await this.pusherService.trigger(channelName, eventName, { sendMessage,action });
+   
   return sendMessage;
-}
-catch(err){
-  console.error("eerrrrrrrrrrrr===========",err);
-}
   }
 
 }

@@ -7,10 +7,8 @@ import {
   } from '@nestjs/common';
   import { Response } from 'express';
 import { SendMessageDto } from './send-message.dto';
-import { SendMessageService } from './send-message.service';
+import { SendMessageService } from './send-message.service'
 
-
-  
   @Controller('insta')
   export class SendMessageController {
     constructor(

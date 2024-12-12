@@ -21,11 +21,15 @@ export class Chat {
   participants: User[];
 
   @OneToMany(() => Message, (message) => message.chat )
-  messages: Promise<Message[]>;
+  messages: Message[];
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
   @Column({ type: 'timestamp', nullable: true })
   updatedAt: Date;
+
+  getvalue(){
+    console.log("object")
+  }
 }

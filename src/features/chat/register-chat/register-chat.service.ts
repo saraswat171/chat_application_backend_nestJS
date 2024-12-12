@@ -11,12 +11,13 @@ export class RegisterChatService {
   ) {}
 
   public async handle(payload) {
+    console.log('payload: ', payload);
     const chat = await this.repository.findChatByParticipantId(payload.participants);
-    console.log('chat: ', chat.messages);
+     console.log('chat: ', chat);
     if(chat){
-      const messages= await chat.messages;
-      console.log('messages: ', messages);
-      return chat;
+      const chatData = await this.repository.findChats(chat?.uuid)
+      // console.log('chatData: ', chatData);
+      return chatData;
     }
     payload.participants = await this.userRepository.findUserByUUIDs(payload.participants);
     const createChat = await this.repository.createChat(payload)

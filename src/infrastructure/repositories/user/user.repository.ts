@@ -26,9 +26,13 @@ export class UserRepository extends Repository<User> {
     .getMany();
   }
 
-  async findUserByUUID(uuid: string){
-    return await this.findOne({ where: { uuid } });
+  async findUserByUUID(uuid: string) {
+    return await this.findOne({
+      where: { uuid },
+      select: ['uuid', 'username', 'email'] 
+    });
   }
+  
 
   async listUsers(payload: UsersResponseCommand) {
     const { page = 1, limit = 10 ,uuid} = payload;
